@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "[one platform field job] invoked"
-printev
+printenv
 ls -l
 
 cat << EOF > ./locations.csv
