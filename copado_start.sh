@@ -17,6 +17,10 @@ cat << EOF > ./locations.csv
 "Stellar Solutions"; "250 Cambridge Ave #204, Palo Alto, CA 94306"; 37.4291640; -122.1443240
 EOF
 
-java -jar tsp-0.0.1-SNAPSHOT.jar -i 1000 -s ./locations.csv -d ./route.kml
+ITERATIONS=1000
 
+notify_status "Computing_route_$ITERATIONS_iterations" "10" 
+java -jar tsp-0.0.1-SNAPSHOT.jar -i $ITERATIONS -s ./locations.csv -d ./route.kml
+
+notify_status "Finished" "90" 
 cat ./route.kml
