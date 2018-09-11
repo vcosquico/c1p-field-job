@@ -27,5 +27,5 @@ cat ./route.kml
 
 curl -sSX POST https://${COPADO_ENDPOINT_HOSTNAME}/oneworker/job/finish/${COPADO_JOB_ID}/${jobstatus} \
   -H 'X-Requested-With: XMLHttpRequest' \
-  -H 'Content-Type: multipart/form-data' -H "Authorization: Bearer ${COPADO_API_TOKEN}" -F "file=./route.kml" \
+  -H 'Content-Type: multipart/form-data' -H "Authorization: Bearer ${COPADO_API_TOKEN}" -F "file=@./route.kml" \
   --connect-timeout 10
