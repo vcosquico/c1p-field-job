@@ -19,7 +19,7 @@ EOF
 
 ITERATIONS=1000
 
-notify_status "Computing_route_$ITERATIONS_iterations" "10" 
+notify_status "Computing_route" "10" 
 java -jar tsp-0.0.1-SNAPSHOT.jar -i $ITERATIONS -s ./locations.csv -d ./route.kml
 
 notify_status "Finished" "90" 
