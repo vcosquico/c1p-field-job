@@ -2,7 +2,6 @@
 
 echo "[one platform field job] invoked"
 printenv
-ls -l
 
 cat << EOF > ./locations.csv
 "Skycart"; "1038 Leigh Ave #206, San Jose, CA 95126"; 37.3062222; -121.9211944
@@ -18,10 +17,6 @@ cat << EOF > ./locations.csv
 "Stellar Solutions"; "250 Cambridge Ave #204, Palo Alto, CA 94306"; 37.4291640; -122.1443240
 EOF
 
-ls -l
-
 java -jar tsp-0.0.1-SNAPSHOT.jar -i 1000 -s ./locations.csv -d ./route.kml
-
-ls -l
 
 cat ./route.kml
