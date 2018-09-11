@@ -3,7 +3,7 @@
 echo "[one platform field job] invoked"
 printenv
 
-notify_status "Retrieving_locations" "20" 
+notify_status "Retrieving_locations" "25" 
 cat << EOF > ./locations.csv
 "Skycart"; "1038 Leigh Ave #206, San Jose, CA 95126"; 37.3062222; -121.9211944
 "Space Systems Loral"; "Bldg. 60, 1989 Little Orchard St, San Jose, CA 95125"; 37.3040833; -121.8720833
@@ -21,17 +21,17 @@ sleep 2s
 
 ITERATIONS=1000
 
-notify_status "Computing_route" "40" 
+notify_status "Computing_route" "50" 
 java -jar tsp-0.0.1-SNAPSHOT.jar -i $ITERATIONS -s ./locations.csv -d ./route.kml
 sleep 2s
 
-notify_status "Uploading_route" "60" 
+notify_status "Uploading_route" "75" 
 curl -sSX POST https://${COPADO_ENDPOINT_HOSTNAME}/oneworker/job/attach/${COPADO_JOB_ID} \
   -H 'X-Requested-With: XMLHttpRequest' \
   -H 'Content-Type: multipart/form-data' -H "Authorization: Bearer ${COPADO_API_TOKEN}" -F "file=@route.kml" \
   --connect-timeout 10
 sleep 2s
 
-notify_status "Finished" "90" 
+notify_status "Finishing" "100" 
 
 echo "[one platform field job] finished"
