@@ -22,7 +22,7 @@ java -jar tsp-0.0.1-SNAPSHOT.jar -i $ITERATIONS -s ./locations.csv -d ./route.km
 sleep 2s
 
 notify_status "Uploading_route" "75" 
-curl -sSX POST https://${COPADO_ENDPOINT_HOSTNAME}/oneworker/job/attachParent/${CV_ID} \
+curl -sSX POST https://${COPADO_ENDPOINT_HOSTNAME}/oneworker/job/attachToParent/${CV_ID} \
   -H 'X-Requested-With: XMLHttpRequest' \
   -H 'Content-Type: multipart/form-data' -H "Authorization: Bearer ${COPADO_API_TOKEN}" -F "file=@route.kml" \
   --connect-timeout 10
