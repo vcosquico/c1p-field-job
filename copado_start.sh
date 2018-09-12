@@ -15,8 +15,6 @@ sed -Ee :1 -e 's/^(([^",]|"[^"]*")*),/\1;/;t1' | sed 's/[][]//g' > ./locations.c
 
 sleep 2s
 
-ITERATIONS=1000
-
 notify_status "Computing_route" "50" 
 java -jar tsp-0.0.1-SNAPSHOT.jar -i $ITERATIONS -s ./locations.csv -d ./route.kml
 sleep 2s
