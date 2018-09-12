@@ -4,19 +4,15 @@ echo "[one platform field job] invoked"
 printenv
 
 notify_status "Retrieving_locations" "25" 
-cat << EOF > ./locations.csv
-"Skycart"; "1038 Leigh Ave #206, San Jose, CA 95126"; 37.3062222; -121.9211944
-"Space Systems Loral"; "Bldg. 60, 1989 Little Orchard St, San Jose, CA 95125"; 37.3040833; -121.8720833
-"BAE Systems"; "6331 San Ignacio Ave, San Jose, CA 95119"; 37.2388889; -121.7811944
-"Hera Systems, Inc."; "7013 Realm Dr Suite B, San Jose, CA 95119 "; 37.2293889; -121.7775000
-"Aviall"; "1538 Montague Expy, San Jose, CA 95131"; 37.4019520; -121.9019760
-"ATK Missile Products"; "151 Martinvale Ln, San Jose, CA 95119"; 37.2305330; -121.7785510
-"Kairos Aerospace"; "777 Cuesta Dr #202, Mountain View, CA 94040"; 37.3736720; -122.0866190
-"Northrop Grumman"; "6379 San Ignacio Ave, San Jose, CA 95119"; 37.2370150; -121.7844210
-"e2v inc"; "765 Sycamore Dr, Milpitas, CA 95035"; 37.4090480; -121.9187230
-"Moon Express"; "19 N Akron Rd, Mountain View, CA 94043"; 37.4124200; -122.0587300
-"Stellar Solutions"; "250 Cambridge Ave #204, Palo Alto, CA 94306"; 37.4291640; -122.1443240
-EOF
+
+curl -sS "${COPADO_SF_SERVICE_ENDPOINT}query?q=SELECT(select+Id+FROM+accounts__r)+FROM+Customer_Visit__c+WHERE+Id='$CV_ID'" \
+-H 'Authorization: Bearer '"$COPADO_SF_AUTH_HEADER"'' | jq -r -c '.records[].Accounts__r.records[] | .Id '| \
+tr '\n' ',' | tr -d " " | sed 's/.$//' | sed "s/,/','/g" | sed -e "s/^/'/g" | sed -e "s/$/'/g" > ./.accounts.id
+
+curl -sS "${COPADO_SF_SERVICE_ENDPOINT}query?q=SELECT+Name,ShippingStreet,ShippingLatitude,ShippingLongitude+FROM+Account+where+Id+in($(cat ./.accounts.id))" \
+-H 'Authorization: Bearer '"$COPADO_SF_AUTH_HEADER"'' | jq -c -r '.records[] | [.Name, .ShippingStreet, .ShippingLatitude, .ShippingLongitude]' | \
+sed -Ee :1 -e 's/^(([^",]|"[^"]*")*),/\1;/;t1' | sed 's/[][]//g' > ./locations.csv
+
 sleep 2s
 
 ITERATIONS=1000
