@@ -15,7 +15,7 @@ sed -Ee :1 -e 's/^(([^",]|"[^"]*")*),/\1;/;t1' | sed 's/[][]//g' > ./locations.c
 # compute get the estimated optimal route to visit all accounts
 ITERATIONS="${ITERATIONS:-1000}"
 notify_status "Computing_route" "50" 
-java -jar tsp-0.0.1-SNAPSHOT.jar -i $ITERATIONS -s ./locations.csv -d ./route.kml
+java -jar tsp-0.0.2-SNAPSHOT.jar -i $ITERATIONS -s ./locations.csv -d ./route.kml
 
 # Attach the route to the customer visit entity
 notify_status "Uploading_route" "75" 
