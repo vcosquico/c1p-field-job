@@ -12,6 +12,8 @@ curl -sS "${COPADO_SF_SERVICE_ENDPOINT}query?q=SELECT+Name,ShippingStreet,Shippi
 -H 'Authorization: Bearer '"$COPADO_SF_AUTH_HEADER"'' | jq -c -r '.records[] | [.Name, .ShippingStreet, .ShippingLatitude, .ShippingLongitude]' | \
 sed -Ee :1 -e 's/^(([^",]|"[^"]*")*),/\1;/;t1' | sed 's/[][]//g' > ./locations.csv
 
+cat ./locations.csv
+
 # compute get the estimated optimal route to visit all accounts
 ITERATIONS="${ITERATIONS:-1000}"
 notify_status "Computing_route" "50" 
