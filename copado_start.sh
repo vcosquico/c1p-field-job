@@ -4,7 +4,7 @@ echo "[one platform field job] invoked"
 
 notify_status "Retrieving_locations" "25" 
 # get the account ids linked to the customer visit
-curl -sS "${COPADO_SF_SERVICE_ENDPOINT}query?q=SELECT(select+Id+FROM+accounts__r)+FROM+Customer_Visit__c+WHERE+Id='$CV_ID'" \
+curl -sS "${COPADO_SF_SERVICE_ENDPOINT}query?q=SELECT(select+Id+FROM+accounts__r)+FROM+Sales_Region__c+WHERE+Id='$CV_ID'" \
 -H 'Authorization: Bearer '"$COPADO_SF_AUTH_HEADER"'' | jq -r -c '.records[].Accounts__r.records[] | .Id '| \
 tr '\n' ',' | tr -d " " | sed 's/.$//' | sed "s/,/','/g" | sed -e "s/^/'/g" | sed -e "s/$/'/g" > ./.accounts.id
 # get the accounts information
