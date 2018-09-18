@@ -2,7 +2,7 @@
 
 set -x
 echo "[one platform field job] invoked"
-
+printev
 notify_status "Retrieving_locations" "25" 
 # get the account ids linked to the customer visit
 curl "${COPADO_SF_SERVICE_ENDPOINT}query?q=SELECT(select+Id+FROM+accounts__r)+FROM+Sales_Region__c+WHERE+Id='$CV_ID'" \
